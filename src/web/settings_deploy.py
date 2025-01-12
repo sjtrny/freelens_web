@@ -1,14 +1,12 @@
 import os
-from pathlib import Path
 
 from web.settings import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# TODO PULL FROM ENVIRONMENT
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(" ")
 
 WSGI_APPLICATION = "web.wsgi.application"

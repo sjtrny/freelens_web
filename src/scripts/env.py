@@ -4,6 +4,7 @@ from django.core.management.utils import get_random_secret_key
 
 env_default_map = {
     "SECRET_KEY": lambda: get_random_secret_key(),
+    "ALLOWED_HOSTS": lambda: "*"
 }
 
 

@@ -26,22 +26,36 @@ def get_defaults_as_dict(func):
 
 
 def get_new_message_int(n):
-    # Define the range
     start, end = 0, max_int_for_N(n)
-
-    # Get the set of used numbers
-    used_numbers = set(
-        Tag.objects.filter(active=True).values_list("message_int", flat=True)
+    excluded = (
+        Tag.objects.filter(active=True)
+        .order_by("message_int")
+        .values_list("message_int", flat=True)
     )
 
-    # Calculate available numbers
-    available_numbers = set(range(start, end + 1)) - used_numbers
+    # Compute the valid ranges
+    valid_ranges = []
+    current_start = start
 
-    if not available_numbers:
-        raise ValidationError(f"No available tags left for N={n}.")
+    for ex in excluded:
+        if current_start <= ex - 1:
+            valid_ranges.append((current_start, ex - 1))
+        current_start = ex + 1
 
-    # Randomly select an available number
-    return random.choice(list(available_numbers))
+    if current_start <= end:
+        valid_ranges.append((current_start, end))
+
+    # Check if there are any valid ranges
+    if not valid_ranges:
+        raise ValueError(
+            "No valid numbers available in the given range and exclusions."
+        )
+
+    # Randomly select a valid range
+    range_start, range_end = random.choice(valid_ranges)
+
+    # Return a random number from the chosen range
+    return random.randint(range_start, range_end)
 
 
 class Tag(models.Model):

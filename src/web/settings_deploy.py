@@ -12,5 +12,3 @@ ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(" ")
 CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(" ")
 
 WSGI_APPLICATION = "web.wsgi.application"
-
-

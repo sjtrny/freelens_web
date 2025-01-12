@@ -1,0 +1,8 @@
+black==24.10.0
+crispy-bootstrap5==2024.10
+Django==5.1.4
+django-crispy-forms==2.3
+django-management-commands==1.1.0
+freelens==0.0.2
+gunicorn==23.0.0
+isort==5.13.2

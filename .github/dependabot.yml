@@ -1,0 +1,17 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pip"
+    directory: "/src"
+    schedule:
+      interval: "cron"
+      cronjob: "0 */6 * * *"
+      timezone: "Etc/UTC"
+    allow:
+      - dependency-name: "freelens"
+    cooldown:
+      default-days: 3
+      exclude:
+        - "freelens"
+    commit-message:
+      prefix: "deps"
